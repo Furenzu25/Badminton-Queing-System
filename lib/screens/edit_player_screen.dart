@@ -16,9 +16,17 @@ class EditPlayerScreen extends StatelessWidget {
       context: context,
       builder: (BuildContext dialogContext) {
         return AlertDialog(
-          title: const Text('Delete Player'),
+          title: const Text(
+            'Delete Player',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+              letterSpacing: -0.3,
+            ),
+          ),
           content: Text(
-            'Are you sure you want to permanently delete "${player.nickname}"?\n\nThis action cannot be undone.',
+            'Are you sure you want to permanently delete "${player.nickname}"? This action cannot be undone.',
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           actions: [
             TextButton(
@@ -38,12 +46,18 @@ class EditPlayerScreen extends StatelessWidget {
 
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    content: Text('Player "${player.nickname}" deleted'),
-                    backgroundColor: Colors.red,
+                    content: Text('${player.nickname} deleted'),
+                    backgroundColor: Theme.of(context).colorScheme.error,
+                    behavior: SnackBarBehavior.floating,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
                   ),
                 );
               },
-              style: FilledButton.styleFrom(backgroundColor: Colors.red),
+              style: FilledButton.styleFrom(
+                backgroundColor: Theme.of(context).colorScheme.error,
+              ),
               child: const Text('Delete'),
             ),
           ],
@@ -58,11 +72,10 @@ class EditPlayerScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Edit Player Profile'),
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: const Text('Edit Player'),
         actions: [
           IconButton(
-            icon: const Icon(Icons.delete),
+            icon: const Icon(Icons.delete_outline, size: 18),
             tooltip: 'Delete Player',
             onPressed: () => _confirmDelete(context),
           ),
@@ -139,7 +152,14 @@ class EditPlayerScreen extends StatelessWidget {
                           content: Text(
                             'Player "$nickname" updated successfully',
                           ),
-                          backgroundColor: Colors.green,
+                          backgroundColor:
+                              Theme.of(context).brightness == Brightness.dark
+                              ? const Color(0xFF10B981)
+                              : Theme.of(context).colorScheme.tertiary,
+                          behavior: SnackBarBehavior.floating,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
                         ),
                       );
 
@@ -164,19 +184,23 @@ class EditPlayerScreen extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: Colors.grey[100],
-              border: Border(top: BorderSide(color: Colors.grey[300]!)),
+              border: Border(
+                top: BorderSide(
+                  color: Theme.of(context).dividerColor,
+                  width: 1,
+                ),
+              ),
             ),
             child: SizedBox(
               width: double.infinity,
               child: OutlinedButton.icon(
                 onPressed: () => _confirmDelete(context),
-                icon: const Icon(Icons.delete),
+                icon: const Icon(Icons.delete_outline, size: 16),
                 label: const Text('Delete Player'),
                 style: OutlinedButton.styleFrom(
-                  foregroundColor: Colors.red,
-                  side: const BorderSide(color: Colors.red),
-                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  foregroundColor: Theme.of(context).colorScheme.error,
+                  side: BorderSide(color: Theme.of(context).colorScheme.error),
+                  padding: const EdgeInsets.symmetric(vertical: 14),
                 ),
               ),
             ),

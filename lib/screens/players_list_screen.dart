@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/player.dart';
 import '../services/player_service.dart';
+import '../services/theme_service.dart';
 import 'add_player_screen.dart';
 import 'edit_player_screen.dart';
 
@@ -29,9 +30,17 @@ class _PlayersListScreenState extends State<PlayersListScreen> {
       context: context,
       builder: (BuildContext dialogContext) {
         return AlertDialog(
-          title: const Text('Delete Player'),
+          title: const Text(
+            'Delete Player',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+              letterSpacing: -0.3,
+            ),
+          ),
           content: Text(
-            'Are you sure you want to delete "${player.nickname}"?\n\nThis action cannot be undone.',
+            'Are you sure you want to delete "${player.nickname}"? This action cannot be undone.',
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           actions: [
             TextButton(
@@ -50,12 +59,18 @@ class _PlayersListScreenState extends State<PlayersListScreen> {
 
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    content: Text('Player "${player.nickname}" deleted'),
-                    backgroundColor: Colors.red,
+                    content: Text('${player.nickname} deleted'),
+                    backgroundColor: Theme.of(context).colorScheme.error,
+                    behavior: SnackBarBehavior.floating,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
                   ),
                 );
               },
-              style: FilledButton.styleFrom(backgroundColor: Colors.red),
+              style: FilledButton.styleFrom(
+                backgroundColor: Theme.of(context).colorScheme.error,
+              ),
               child: const Text('Delete'),
             ),
           ],
@@ -68,22 +83,36 @@ class _PlayersListScreenState extends State<PlayersListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('All Players'),
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: const Text('Players'),
+        actions: [
+          // Theme toggle button
+          IconButton(
+            icon: Icon(
+              Theme.of(context).brightness == Brightness.dark
+                  ? Icons.light_mode
+                  : Icons.dark_mode,
+              size: 20,
+            ),
+            tooltip: 'Toggle theme',
+            onPressed: () {
+              Provider.of<ThemeService>(context, listen: false).toggleTheme();
+            },
+          ),
+        ],
       ),
       body: Column(
         children: [
           // Search bar
           Padding(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
             child: TextField(
               controller: _searchController,
               decoration: InputDecoration(
-                hintText: 'Search by nickname or full name...',
-                prefixIcon: const Icon(Icons.search),
+                hintText: 'Search players...',
+                prefixIcon: const Icon(Icons.search, size: 18),
                 suffixIcon: _searchQuery.isNotEmpty
                     ? IconButton(
-                        icon: const Icon(Icons.clear),
+                        icon: const Icon(Icons.close, size: 18),
                         onPressed: () {
                           setState(() {
                             _searchController.clear();
@@ -92,11 +121,6 @@ class _PlayersListScreenState extends State<PlayersListScreen> {
                         },
                       )
                     : null,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                filled: true,
-                fillColor: Colors.grey[100],
               ),
               onChanged: (value) {
                 setState(() {
@@ -119,14 +143,25 @@ class _PlayersListScreenState extends State<PlayersListScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(
-                          _searchQuery.isEmpty
-                              ? Icons.people_outline
-                              : Icons.search_off,
-                          size: 64,
-                          color: Colors.grey,
+                        Container(
+                          padding: const EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).colorScheme.surface,
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(
+                              color: Theme.of(context).dividerColor,
+                              width: 1,
+                            ),
+                          ),
+                          child: Icon(
+                            _searchQuery.isEmpty
+                                ? Icons.people_outline
+                                : Icons.search_off,
+                            size: 48,
+                            color: Theme.of(context).iconTheme.color,
+                          ),
                         ),
-                        const SizedBox(height: 16),
+                        const SizedBox(height: 20),
                         Text(
                           _searchQuery.isEmpty
                               ? 'No players yet'
@@ -136,9 +171,9 @@ class _PlayersListScreenState extends State<PlayersListScreen> {
                         const SizedBox(height: 8),
                         Text(
                           _searchQuery.isEmpty
-                              ? 'Tap the + button to add a player'
-                              : 'Try a different search term',
-                          style: Theme.of(context).textTheme.bodyMedium,
+                              ? 'Get started by adding your first player'
+                              : 'Try adjusting your search',
+                          style: Theme.of(context).textTheme.bodySmall,
                         ),
                       ],
                     ),
@@ -175,8 +210,8 @@ class _PlayersListScreenState extends State<PlayersListScreen> {
             MaterialPageRoute(builder: (context) => const AddPlayerScreen()),
           );
         },
-        icon: const Icon(Icons.add),
-        label: const Text('Add New Player'),
+        icon: const Icon(Icons.add, size: 20),
+        label: const Text('Add Player'),
       ),
     );
   }
@@ -204,31 +239,23 @@ class _PlayerCard extends StatelessWidget {
         return false; // Don't dismiss automatically, let dialog handle it
       },
       background: Container(
-        margin: const EdgeInsets.symmetric(vertical: 4),
+        margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
         decoration: BoxDecoration(
-          color: Colors.red,
+          color: Theme.of(context).colorScheme.error,
           borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: Theme.of(context).dividerColor, width: 1),
         ),
         alignment: Alignment.centerRight,
-        padding: const EdgeInsets.only(right: 20),
-        child: const Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.delete, color: Colors.white, size: 32),
-            SizedBox(height: 4),
-            Text(
-              'Delete',
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
-        ),
+        padding: const EdgeInsets.only(right: 24),
+        child: const Icon(Icons.delete_outline, color: Colors.white, size: 20),
       ),
-      child: Card(
-        margin: const EdgeInsets.symmetric(vertical: 4),
-        elevation: 2,
+      child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.surface,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: Theme.of(context).dividerColor, width: 1),
+        ),
         child: InkWell(
           onTap: onTap,
           borderRadius: BorderRadius.circular(12),
@@ -236,20 +263,30 @@ class _PlayerCard extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             child: Row(
               children: [
-                // Avatar
-                CircleAvatar(
-                  radius: 30,
-                  backgroundColor: Theme.of(context).colorScheme.primary,
-                  child: Text(
-                    player.nickname.substring(0, 1).toUpperCase(),
-                    style: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                // Avatar - minimalist design
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.secondary,
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(
+                      color: Theme.of(context).dividerColor,
+                      width: 1,
+                    ),
+                  ),
+                  child: Center(
+                    child: Text(
+                      player.nickname.substring(0, 1).toUpperCase(),
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: Theme.of(context).colorScheme.onSurface,
+                      ),
                     ),
                   ),
                 ),
-                const SizedBox(width: 16),
+                const SizedBox(width: 14),
                 // Player info
                 Expanded(
                   child: Column(
@@ -257,37 +294,50 @@ class _PlayerCard extends StatelessWidget {
                     children: [
                       Text(
                         player.nickname,
-                        style: Theme.of(context).textTheme.titleMedium
-                            ?.copyWith(fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: Theme.of(context).colorScheme.onSurface,
+                          letterSpacing: 0.15,
+                        ),
                       ),
-                      const SizedBox(height: 4),
+                      const SizedBox(height: 2),
                       Text(
                         player.fullName,
-                        style: Theme.of(context).textTheme.bodyMedium,
+                        style: Theme.of(context).textTheme.bodySmall,
                       ),
-                      const SizedBox(height: 4),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.sports_tennis,
-                            size: 16,
-                            color: Colors.grey[600],
+                      const SizedBox(height: 6),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 3,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.secondary,
+                          borderRadius: BorderRadius.circular(6),
+                          border: Border.all(
+                            color: Theme.of(context).dividerColor,
+                            width: 1,
                           ),
-                          const SizedBox(width: 4),
-                          Expanded(
-                            child: Text(
-                              player.skillLevelRange,
-                              style: Theme.of(context).textTheme.bodySmall
-                                  ?.copyWith(color: Colors.grey[600]),
-                            ),
+                        ),
+                        child: Text(
+                          player.skillLevelRange,
+                          style: TextStyle(
+                            fontSize: 11,
+                            fontWeight: FontWeight.w500,
+                            color: Theme.of(context).textTheme.bodySmall?.color,
                           ),
-                        ],
+                        ),
                       ),
                     ],
                   ),
                 ),
                 // Arrow icon
-                const Icon(Icons.chevron_right),
+                Icon(
+                  Icons.chevron_right,
+                  size: 18,
+                  color: Theme.of(context).iconTheme.color,
+                ),
               ],
             ),
           ),

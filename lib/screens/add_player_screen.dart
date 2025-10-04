@@ -13,10 +13,7 @@ class AddPlayerScreen extends StatelessWidget {
     final playerService = Provider.of<PlayerService>(context, listen: false);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Add New Player'),
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-      ),
+      appBar: AppBar(title: const Text('Add Player')),
       body: PlayerForm(
         submitButtonText: 'Save Player',
         onSubmit:
@@ -73,7 +70,14 @@ class AddPlayerScreen extends StatelessWidget {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text('Player "$nickname" added successfully'),
-                    backgroundColor: Colors.green,
+                    backgroundColor:
+                        Theme.of(context).brightness == Brightness.dark
+                        ? const Color(0xFF10B981)
+                        : Theme.of(context).colorScheme.tertiary,
+                    behavior: SnackBarBehavior.floating,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
                   ),
                 );
 

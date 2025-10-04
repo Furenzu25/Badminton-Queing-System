@@ -67,25 +67,18 @@ class _BadmintonLevelSliderState extends State<BadmintonLevelSlider> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     final maxValue = (BadmintonLevel.values.length * 3 - 1).toDouble();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Badminton Skill Level Range',
-          style: theme.textTheme.titleMedium?.copyWith(
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        const SizedBox(height: 8),
         // Display current selection
         Container(
-          padding: const EdgeInsets.all(12),
+          padding: const EdgeInsets.all(14),
           decoration: BoxDecoration(
-            color: theme.colorScheme.primaryContainer,
+            color: Theme.of(context).colorScheme.surface,
             borderRadius: BorderRadius.circular(8),
+            border: Border.all(color: Theme.of(context).dividerColor, width: 1),
           ),
           child: Row(
             children: [
@@ -93,26 +86,36 @@ class _BadmintonLevelSliderState extends State<BadmintonLevelSlider> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Minimum', style: theme.textTheme.labelSmall),
+                    Text('MIN', style: Theme.of(context).textTheme.labelSmall),
+                    const SizedBox(height: 4),
                     Text(
-                      _getLabel(_minValue),
-                      style: theme.textTheme.bodyMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
+                      _getLabel(_minValue).replaceAll('\n', ' '),
+                      style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w500,
+                        color: Theme.of(context).colorScheme.onSurface,
                       ),
                     ),
                   ],
                 ),
               ),
-              const Icon(Icons.arrow_forward),
+              Icon(
+                Icons.arrow_forward,
+                size: 16,
+                color: Theme.of(context).iconTheme.color,
+              ),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Text('Maximum', style: theme.textTheme.labelSmall),
+                    Text('MAX', style: Theme.of(context).textTheme.labelSmall),
+                    const SizedBox(height: 4),
                     Text(
-                      _getLabel(_maxValue),
-                      style: theme.textTheme.bodyMedium?.copyWith(
-                        fontWeight: FontWeight.bold,
+                      _getLabel(_maxValue).replaceAll('\n', ' '),
+                      style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w500,
+                        color: Theme.of(context).colorScheme.onSurface,
                       ),
                       textAlign: TextAlign.right,
                     ),
@@ -122,7 +125,7 @@ class _BadmintonLevelSliderState extends State<BadmintonLevelSlider> {
             ],
           ),
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 12),
         // Range slider
         RangeSlider(
           values: RangeValues(_minValue, _maxValue),
@@ -144,14 +147,14 @@ class _BadmintonLevelSliderState extends State<BadmintonLevelSlider> {
         ),
         // Level labels
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: BadmintonLevel.values.map((level) {
               return Flexible(
                 child: Text(
                   level.displayName,
-                  style: theme.textTheme.labelSmall,
+                  style: Theme.of(context).textTheme.labelSmall,
                   textAlign: TextAlign.center,
                   overflow: TextOverflow.ellipsis,
                 ),

@@ -114,42 +114,53 @@ class _PlayerFormState extends State<PlayerForm> {
       child: ListView(
         padding: const EdgeInsets.all(16),
         children: [
+          // Form section label
+          Text(
+            'BASIC INFORMATION',
+            style: Theme.of(context).textTheme.labelSmall,
+          ),
+          const SizedBox(height: 12),
+
           // Nickname field
           TextFormField(
             controller: _nicknameController,
             decoration: const InputDecoration(
-              labelText: 'Nickname *',
-              hintText: 'Enter player nickname',
-              border: OutlineInputBorder(),
-              prefixIcon: Icon(Icons.person),
+              labelText: 'Nickname',
+              hintText: 'Player nickname',
+              prefixIcon: Icon(Icons.person, size: 18),
             ),
             validator: Validators.validateNickname,
             textCapitalization: TextCapitalization.words,
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 12),
 
           // Full Name field
           TextFormField(
             controller: _fullNameController,
             decoration: const InputDecoration(
-              labelText: 'Full Name *',
-              hintText: 'Enter full name',
-              border: OutlineInputBorder(),
-              prefixIcon: Icon(Icons.badge),
+              labelText: 'Full Name',
+              hintText: 'Full legal name',
+              prefixIcon: Icon(Icons.badge, size: 18),
             ),
             validator: Validators.validateFullName,
             textCapitalization: TextCapitalization.words,
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 20),
+
+          // Contact section
+          Text(
+            'CONTACT DETAILS',
+            style: Theme.of(context).textTheme.labelSmall,
+          ),
+          const SizedBox(height: 12),
 
           // Contact Number field
           TextFormField(
             controller: _contactNumberController,
             decoration: const InputDecoration(
-              labelText: 'Contact Number *',
-              hintText: 'Enter contact number',
-              border: OutlineInputBorder(),
-              prefixIcon: Icon(Icons.phone),
+              labelText: 'Phone Number',
+              hintText: 'Contact number',
+              prefixIcon: Icon(Icons.phone, size: 18),
             ),
             keyboardType: TextInputType.phone,
             inputFormatters: [
@@ -157,52 +168,53 @@ class _PlayerFormState extends State<PlayerForm> {
             ],
             validator: Validators.validatePhoneNumber,
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 12),
 
           // Email field
           TextFormField(
             controller: _emailController,
             decoration: const InputDecoration(
-              labelText: 'Email *',
-              hintText: 'Enter email address',
-              border: OutlineInputBorder(),
-              prefixIcon: Icon(Icons.email),
+              labelText: 'Email',
+              hintText: 'Email address',
+              prefixIcon: Icon(Icons.email, size: 18),
             ),
             keyboardType: TextInputType.emailAddress,
             validator: Validators.validateEmail,
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 12),
 
           // Address field
           TextFormField(
             controller: _addressController,
             decoration: const InputDecoration(
-              labelText: 'Address *',
-              hintText: 'Enter address',
-              border: OutlineInputBorder(),
-              prefixIcon: Icon(Icons.home),
+              labelText: 'Address',
+              hintText: 'Physical address',
+              prefixIcon: Icon(Icons.home, size: 18),
               alignLabelWithHint: true,
             ),
-            maxLines: 3,
+            maxLines: 2,
             validator: Validators.validateAddress,
             textCapitalization: TextCapitalization.sentences,
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 12),
 
           // Remarks field
           TextFormField(
             controller: _remarksController,
             decoration: const InputDecoration(
-              labelText: 'Remarks',
-              hintText: 'Enter any additional remarks (optional)',
-              border: OutlineInputBorder(),
-              prefixIcon: Icon(Icons.notes),
+              labelText: 'Remarks (Optional)',
+              hintText: 'Additional notes',
+              prefixIcon: Icon(Icons.notes, size: 18),
               alignLabelWithHint: true,
             ),
-            maxLines: 3,
+            maxLines: 2,
             textCapitalization: TextCapitalization.sentences,
           ),
-          const SizedBox(height: 24),
+          const SizedBox(height: 20),
+
+          // Skill level section
+          Text('SKILL LEVEL', style: Theme.of(context).textTheme.labelSmall),
+          const SizedBox(height: 12),
 
           // Badminton Level Slider
           BadmintonLevelSlider(
@@ -219,7 +231,7 @@ class _PlayerFormState extends State<PlayerForm> {
               });
             },
           ),
-          const SizedBox(height: 32),
+          const SizedBox(height: 24),
 
           // Action buttons
           Row(
@@ -227,24 +239,19 @@ class _PlayerFormState extends State<PlayerForm> {
               Expanded(
                 child: OutlinedButton(
                   onPressed: widget.onCancel,
-                  style: OutlinedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                  ),
                   child: const Text('Cancel'),
                 ),
               ),
-              const SizedBox(width: 16),
+              const SizedBox(width: 12),
               Expanded(
                 child: FilledButton(
                   onPressed: _handleSubmit,
-                  style: FilledButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                  ),
                   child: Text(widget.submitButtonText),
                 ),
               ),
             ],
           ),
+          const SizedBox(height: 16),
         ],
       ),
     );
