@@ -3,6 +3,8 @@ import 'package:provider/provider.dart';
 import '../models/player.dart';
 import '../services/player_service.dart';
 import '../widgets/player_form.dart';
+import '../utils/snackbar_helper.dart';
+import '../utils/player_validation_helper.dart';
 
 /// Screen for editing an existing player profile
 /// Following single responsibility principle - handles only the edit player UI
@@ -44,15 +46,9 @@ class EditPlayerScreen extends StatelessWidget {
                 Navigator.of(dialogContext).pop(); // Close dialog
                 Navigator.of(context).pop(); // Close edit screen
 
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('${player.nickname} deleted'),
-                    backgroundColor: Theme.of(context).colorScheme.error,
-                    behavior: SnackBarBehavior.floating,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
+                SnackBarHelper.showError(
+                  context,
+                  '${player.nickname} deleted',
                 );
               },
               style: FilledButton.styleFrom(
@@ -101,33 +97,14 @@ class EditPlayerScreen extends StatelessWidget {
                     maxStrength,
                   ) {
                     try {
-                      // Check for duplicate nickname (excluding current player)
-                      if (playerService.isNicknameExists(
+                      // Validate uniqueness
+                      if (!PlayerValidationHelper.validateUniqueness(
+                        context,
+                        playerService,
                         nickname,
-                        excludePlayerId: player.id,
-                      )) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              'Nickname "$nickname" already exists',
-                            ),
-                            backgroundColor: Colors.orange,
-                          ),
-                        );
-                        return;
-                      }
-
-                      // Check for duplicate email (excluding current player)
-                      if (playerService.isEmailExists(
                         email,
                         excludePlayerId: player.id,
                       )) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('Email "$email" already exists'),
-                            backgroundColor: Colors.orange,
-                          ),
-                        );
                         return;
                       }
 
@@ -147,31 +124,18 @@ class EditPlayerScreen extends StatelessWidget {
                       );
 
                       // Show success message
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            'Player "$nickname" updated successfully',
-                          ),
-                          backgroundColor:
-                              Theme.of(context).brightness == Brightness.dark
-                              ? const Color(0xFF10B981)
-                              : Theme.of(context).colorScheme.tertiary,
-                          behavior: SnackBarBehavior.floating,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
+                      SnackBarHelper.showSuccess(
+                        context,
+                        'Player "$nickname" updated successfully',
                       );
 
                       // Navigate back
                       Navigator.of(context).pop();
                     } catch (e) {
                       // Show error message
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Error: ${e.toString()}'),
-                          backgroundColor: Colors.red,
-                        ),
+                      SnackBarHelper.showError(
+                        context,
+                        'Error: ${e.toString()}',
                       );
                     }
                   },

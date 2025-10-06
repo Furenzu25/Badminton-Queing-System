@@ -12,8 +12,10 @@ class AppTheme {
   static const Color darkSecondary = Color(0xFF1F1F1F);
   static const Color darkMuted = Color(0xFF737373);
   static const Color darkBorder = Color(0xFF262626);
-  static const Color darkAccent = Color(0xFF3B82F6); // Blue highlight for dark mode
-  
+  static const Color darkAccent = Color(
+    0xFF3B82F6,
+  ); // Blue highlight for dark mode
+
   // Light mode colors - warm and inviting
   static const Color lightBackground = Color(0xFFFBFBF9);
   static const Color lightForeground = Color(0xFF1C1917);
@@ -24,7 +26,7 @@ class AppTheme {
   static const Color lightMuted = Color(0xFF78716C);
   static const Color lightBorder = Color(0xFFE7E5E4);
   static const Color lightAccent = Color(0xFFF97316); // Warm orange accent
-  
+
   // Shared colors
   static const Color destructive = Color(0xFFEF4444);
   static const Color destructiveForeground = Color(0xFFFAFAFA);
@@ -46,10 +48,10 @@ class AppTheme {
         onError: destructiveForeground,
         tertiary: darkAccent,
       ),
-      
+
       // System font stack - matches iOS, macOS, Google, Windows
       fontFamily: _getFontFamily(),
-      
+
       // Typography - Industry standard
       textTheme: const TextTheme(
         displayLarge: TextStyle(
@@ -152,7 +154,10 @@ class AppTheme {
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: darkBackground,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 14,
+        ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(color: darkBorder, width: 1),
@@ -197,117 +202,121 @@ class AppTheme {
 
       // Button themes with highlights
       elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: darkPrimary,
-          foregroundColor: darkPrimaryForeground,
-          elevation: 0,
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
-          textStyle: const TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
-            letterSpacing: 0.1,
-          ),
-        ).copyWith(
-          overlayColor: MaterialStateProperty.resolveWith<Color?>(
-            (Set<MaterialState> states) {
-              if (states.contains(MaterialState.pressed)) {
-                return darkAccent.withOpacity(0.2);
-              }
-              if (states.contains(MaterialState.hovered)) {
-                return darkAccent.withOpacity(0.1);
-              }
-              return null;
-            },
-          ),
-        ),
+        style:
+            ElevatedButton.styleFrom(
+              backgroundColor: darkPrimary,
+              foregroundColor: darkPrimaryForeground,
+              elevation: 0,
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+              textStyle: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+                letterSpacing: 0.1,
+              ),
+            ).copyWith(
+              overlayColor: MaterialStateProperty.resolveWith<Color?>((
+                Set<MaterialState> states,
+              ) {
+                if (states.contains(MaterialState.pressed)) {
+                  return darkAccent.withOpacity(0.2);
+                }
+                if (states.contains(MaterialState.hovered)) {
+                  return darkAccent.withOpacity(0.1);
+                }
+                return null;
+              }),
+            ),
       ),
 
       filledButtonTheme: FilledButtonThemeData(
-        style: FilledButton.styleFrom(
-          backgroundColor: darkPrimary,
-          foregroundColor: darkPrimaryForeground,
-          elevation: 0,
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
-          textStyle: const TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
-            letterSpacing: 0.1,
-          ),
-        ).copyWith(
-          overlayColor: MaterialStateProperty.resolveWith<Color?>(
-            (Set<MaterialState> states) {
-              if (states.contains(MaterialState.pressed)) {
-                return darkAccent.withOpacity(0.2);
-              }
-              if (states.contains(MaterialState.hovered)) {
-                return darkAccent.withOpacity(0.1);
-              }
-              return null;
-            },
-          ),
-        ),
+        style:
+            FilledButton.styleFrom(
+              backgroundColor: darkPrimary,
+              foregroundColor: darkPrimaryForeground,
+              elevation: 0,
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+              textStyle: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+                letterSpacing: 0.1,
+              ),
+            ).copyWith(
+              overlayColor: MaterialStateProperty.resolveWith<Color?>((
+                Set<MaterialState> states,
+              ) {
+                if (states.contains(MaterialState.pressed)) {
+                  return darkAccent.withOpacity(0.2);
+                }
+                if (states.contains(MaterialState.hovered)) {
+                  return darkAccent.withOpacity(0.1);
+                }
+                return null;
+              }),
+            ),
       ),
 
       outlinedButtonTheme: OutlinedButtonThemeData(
-        style: OutlinedButton.styleFrom(
-          foregroundColor: darkForeground,
-          side: const BorderSide(color: darkBorder, width: 1),
-          elevation: 0,
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
-          textStyle: const TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
-            letterSpacing: 0.1,
-          ),
-        ).copyWith(
-          overlayColor: MaterialStateProperty.resolveWith<Color?>(
-            (Set<MaterialState> states) {
-              if (states.contains(MaterialState.pressed)) {
-                return darkAccent.withOpacity(0.15);
-              }
-              if (states.contains(MaterialState.hovered)) {
-                return darkAccent.withOpacity(0.08);
-              }
-              return null;
-            },
-          ),
-        ),
+        style:
+            OutlinedButton.styleFrom(
+              foregroundColor: darkForeground,
+              side: const BorderSide(color: darkBorder, width: 1),
+              elevation: 0,
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+              textStyle: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+                letterSpacing: 0.1,
+              ),
+            ).copyWith(
+              overlayColor: MaterialStateProperty.resolveWith<Color?>((
+                Set<MaterialState> states,
+              ) {
+                if (states.contains(MaterialState.pressed)) {
+                  return darkAccent.withOpacity(0.15);
+                }
+                if (states.contains(MaterialState.hovered)) {
+                  return darkAccent.withOpacity(0.08);
+                }
+                return null;
+              }),
+            ),
       ),
 
       textButtonTheme: TextButtonThemeData(
-        style: TextButton.styleFrom(
-          foregroundColor: darkForeground,
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(6),
-          ),
-          textStyle: const TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
-            letterSpacing: 0.1,
-          ),
-        ).copyWith(
-          overlayColor: MaterialStateProperty.resolveWith<Color?>(
-            (Set<MaterialState> states) {
-              if (states.contains(MaterialState.pressed)) {
-                return darkAccent.withOpacity(0.15);
-              }
-              if (states.contains(MaterialState.hovered)) {
-                return darkAccent.withOpacity(0.08);
-              }
-              return null;
-            },
-          ),
-        ),
+        style:
+            TextButton.styleFrom(
+              foregroundColor: darkForeground,
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(6),
+              ),
+              textStyle: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+                letterSpacing: 0.1,
+              ),
+            ).copyWith(
+              overlayColor: MaterialStateProperty.resolveWith<Color?>((
+                Set<MaterialState> states,
+              ) {
+                if (states.contains(MaterialState.pressed)) {
+                  return darkAccent.withOpacity(0.15);
+                }
+                if (states.contains(MaterialState.hovered)) {
+                  return darkAccent.withOpacity(0.08);
+                }
+                return null;
+              }),
+            ),
       ),
 
       // Floating action button with highlight
@@ -316,9 +325,7 @@ class AppTheme {
         foregroundColor: darkPrimaryForeground,
         elevation: 0,
         highlightElevation: 0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),
 
       // Dialog theme
@@ -339,10 +346,7 @@ class AppTheme {
       ),
 
       // Icon theme
-      iconTheme: const IconThemeData(
-        color: darkMuted,
-        size: 20,
-      ),
+      iconTheme: const IconThemeData(color: darkMuted, size: 20),
     );
   }
 
@@ -360,12 +364,12 @@ class AppTheme {
         onSurface: lightForeground,
         error: destructive,
         onError: destructiveForeground,
-        tertiary: lightAccent,
+        tertiary: Color.fromARGB(255, 44, 83, 176),
       ),
-      
+
       // System font stack
       fontFamily: _getFontFamily(),
-      
+
       // Typography
       textTheme: const TextTheme(
         displayLarge: TextStyle(
@@ -468,7 +472,10 @@ class AppTheme {
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: lightCard,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 14,
+        ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(color: lightBorder, width: 1),
@@ -479,7 +486,10 @@ class AppTheme {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
-          borderSide: const BorderSide(color: lightAccent, width: 2),
+          borderSide: const BorderSide(
+            color: Color.fromARGB(255, 36, 56, 172),
+            width: 2,
+          ),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
@@ -513,128 +523,170 @@ class AppTheme {
 
       // Button themes - warm colors
       elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: lightPrimary,
-          foregroundColor: lightPrimaryForeground,
-          elevation: 0,
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
-          textStyle: const TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
-            letterSpacing: 0.1,
-          ),
-        ).copyWith(
-          overlayColor: MaterialStateProperty.resolveWith<Color?>(
-            (Set<MaterialState> states) {
-              if (states.contains(MaterialState.pressed)) {
-                return lightAccent.withOpacity(0.15);
-              }
-              if (states.contains(MaterialState.hovered)) {
-                return lightAccent.withOpacity(0.08);
-              }
-              return null;
-            },
-          ),
-        ),
+        style:
+            ElevatedButton.styleFrom(
+              backgroundColor: lightPrimary,
+              foregroundColor: lightPrimaryForeground,
+              elevation: 0,
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+              textStyle: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+                letterSpacing: 0.1,
+              ),
+            ).copyWith(
+              overlayColor: MaterialStateProperty.resolveWith<Color?>((
+                Set<MaterialState> states,
+              ) {
+                if (states.contains(MaterialState.pressed)) {
+                  return const Color.fromARGB(
+                    255,
+                    38,
+                    103,
+                    216,
+                  ).withOpacity(0.15);
+                }
+                if (states.contains(MaterialState.hovered)) {
+                  return const Color.fromARGB(
+                    255,
+                    44,
+                    94,
+                    222,
+                  ).withOpacity(0.08);
+                }
+                return null;
+              }),
+            ),
       ),
 
       filledButtonTheme: FilledButtonThemeData(
-        style: FilledButton.styleFrom(
-          backgroundColor: lightPrimary,
-          foregroundColor: lightPrimaryForeground,
-          elevation: 0,
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
-          textStyle: const TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
-            letterSpacing: 0.1,
-          ),
-        ).copyWith(
-          overlayColor: MaterialStateProperty.resolveWith<Color?>(
-            (Set<MaterialState> states) {
-              if (states.contains(MaterialState.pressed)) {
-                return lightAccent.withOpacity(0.15);
-              }
-              if (states.contains(MaterialState.hovered)) {
-                return lightAccent.withOpacity(0.08);
-              }
-              return null;
-            },
-          ),
-        ),
+        style:
+            FilledButton.styleFrom(
+              backgroundColor: lightPrimary,
+              foregroundColor: lightPrimaryForeground,
+              elevation: 0,
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+              textStyle: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+                letterSpacing: 0.1,
+              ),
+            ).copyWith(
+              overlayColor: MaterialStateProperty.resolveWith<Color?>((
+                Set<MaterialState> states,
+              ) {
+                if (states.contains(MaterialState.pressed)) {
+                  return const Color.fromARGB(
+                    255,
+                    22,
+                    63,
+                    244,
+                  ).withOpacity(0.15);
+                }
+                if (states.contains(MaterialState.hovered)) {
+                  return const Color.fromARGB(
+                    255,
+                    31,
+                    108,
+                    222,
+                  ).withOpacity(0.08);
+                }
+                return null;
+              }),
+            ),
       ),
 
       outlinedButtonTheme: OutlinedButtonThemeData(
-        style: OutlinedButton.styleFrom(
-          foregroundColor: lightForeground,
-          side: const BorderSide(color: lightBorder, width: 1.5),
-          elevation: 0,
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
-          textStyle: const TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
-            letterSpacing: 0.1,
-          ),
-        ).copyWith(
-          overlayColor: MaterialStateProperty.resolveWith<Color?>(
-            (Set<MaterialState> states) {
-              if (states.contains(MaterialState.pressed)) {
-                return lightAccent.withOpacity(0.1);
-              }
-              if (states.contains(MaterialState.hovered)) {
-                return lightAccent.withOpacity(0.05);
-              }
-              return null;
-            },
-          ),
-        ),
+        style:
+            OutlinedButton.styleFrom(
+              foregroundColor: lightForeground,
+              side: const BorderSide(color: lightBorder, width: 1.5),
+              elevation: 0,
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+              textStyle: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+                letterSpacing: 0.1,
+              ),
+            ).copyWith(
+              overlayColor: MaterialStateProperty.resolveWith<Color?>((
+                Set<MaterialState> states,
+              ) {
+                if (states.contains(MaterialState.pressed)) {
+                  return const Color.fromARGB(
+                    255,
+                    71,
+                    37,
+                    241,
+                  ).withOpacity(0.1);
+                }
+                if (states.contains(MaterialState.hovered)) {
+                  return const Color.fromARGB(
+                    255,
+                    17,
+                    88,
+                    219,
+                  ).withOpacity(0.05);
+                }
+                return null;
+              }),
+            ),
       ),
 
       textButtonTheme: TextButtonThemeData(
-        style: TextButton.styleFrom(
-          foregroundColor: lightForeground,
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(6),
-          ),
-          textStyle: const TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
-            letterSpacing: 0.1,
-          ),
-        ).copyWith(
-          overlayColor: MaterialStateProperty.resolveWith<Color?>(
-            (Set<MaterialState> states) {
-              if (states.contains(MaterialState.pressed)) {
-                return lightAccent.withOpacity(0.1);
-              }
-              if (states.contains(MaterialState.hovered)) {
-                return lightAccent.withOpacity(0.05);
-              }
-              return null;
-            },
-          ),
-        ),
+        style:
+            TextButton.styleFrom(
+              foregroundColor: lightForeground,
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(6),
+              ),
+              textStyle: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+                letterSpacing: 0.1,
+              ),
+            ).copyWith(
+              overlayColor: MaterialStateProperty.resolveWith<Color?>((
+                Set<MaterialState> states,
+              ) {
+                if (states.contains(MaterialState.pressed)) {
+                  return const Color.fromARGB(
+                    255,
+                    22,
+                    52,
+                    249,
+                  ).withOpacity(0.1);
+                }
+                if (states.contains(MaterialState.hovered)) {
+                  return const Color.fromARGB(
+                    255,
+                    22,
+                    60,
+                    249,
+                  ).withOpacity(0.05);
+                }
+                return null;
+              }),
+            ),
       ),
 
       // Floating action button
       floatingActionButtonTheme: FloatingActionButtonThemeData(
-        backgroundColor: lightAccent,
+        backgroundColor: const Color.fromARGB(255, 25, 105, 224),
         foregroundColor: Colors.white,
         elevation: 2,
         highlightElevation: 4,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),
 
       // Dialog theme
@@ -655,10 +707,7 @@ class AppTheme {
       ),
 
       // Icon theme
-      iconTheme: const IconThemeData(
-        color: lightMuted,
-        size: 20,
-      ),
+      iconTheme: const IconThemeData(color: lightMuted, size: 20),
     );
   }
 
@@ -671,4 +720,3 @@ class AppTheme {
     return null; // null uses system default
   }
 }
-

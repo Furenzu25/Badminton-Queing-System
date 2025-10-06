@@ -65,6 +65,15 @@ class _BadmintonLevelSliderState extends State<BadmintonLevelSlider> {
     return '${level.displayName}\n${strength.displayName}';
   }
 
+  /// Build text style for level display labels
+  TextStyle _getLevelTextStyle(BuildContext context) {
+    return TextStyle(
+      fontSize: 13,
+      fontWeight: FontWeight.w500,
+      color: Theme.of(context).colorScheme.onSurface,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final maxValue = (BadmintonLevel.values.length * 3 - 1).toDouble();
@@ -90,11 +99,7 @@ class _BadmintonLevelSliderState extends State<BadmintonLevelSlider> {
                     const SizedBox(height: 4),
                     Text(
                       _getLabel(_minValue).replaceAll('\n', ' '),
-                      style: TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w500,
-                        color: Theme.of(context).colorScheme.onSurface,
-                      ),
+                      style: _getLevelTextStyle(context),
                     ),
                   ],
                 ),
@@ -112,11 +117,7 @@ class _BadmintonLevelSliderState extends State<BadmintonLevelSlider> {
                     const SizedBox(height: 4),
                     Text(
                       _getLabel(_maxValue).replaceAll('\n', ' '),
-                      style: TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w500,
-                        color: Theme.of(context).colorScheme.onSurface,
-                      ),
+                      style: _getLevelTextStyle(context),
                       textAlign: TextAlign.right,
                     ),
                   ],

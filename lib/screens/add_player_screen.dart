@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../services/player_service.dart';
 import '../widgets/player_form.dart';
+import '../utils/snackbar_helper.dart';
+import '../utils/player_validation_helper.dart';
 
 /// Screen for adding a new player profile
 /// Following single responsibility principle - handles only the add player UI
@@ -30,25 +32,13 @@ class AddPlayerScreen extends StatelessWidget {
               maxStrength,
             ) {
               try {
-                // Check for duplicate nickname
-                if (playerService.isNicknameExists(nickname)) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('Nickname "$nickname" already exists'),
-                      backgroundColor: Colors.orange,
-                    ),
-                  );
-                  return;
-                }
-
-                // Check for duplicate email
-                if (playerService.isEmailExists(email)) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('Email "$email" already exists'),
-                      backgroundColor: Colors.orange,
-                    ),
-                  );
+                // Validate uniqueness
+                if (!PlayerValidationHelper.validateUniqueness(
+                  context,
+                  playerService,
+                  nickname,
+                  email,
+                )) {
                   return;
                 }
 
@@ -67,30 +57,16 @@ class AddPlayerScreen extends StatelessWidget {
                 );
 
                 // Show success message
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('Player "$nickname" added successfully'),
-                    backgroundColor:
-                        Theme.of(context).brightness == Brightness.dark
-                        ? const Color(0xFF10B981)
-                        : Theme.of(context).colorScheme.tertiary,
-                    behavior: SnackBarBehavior.floating,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
+                SnackBarHelper.showSuccess(
+                  context,
+                  'Player "$nickname" added successfully',
                 );
 
                 // Navigate back
                 Navigator.of(context).pop();
               } catch (e) {
                 // Show error message
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('Error: ${e.toString()}'),
-                    backgroundColor: Colors.red,
-                  ),
-                );
+                SnackBarHelper.showError(context, 'Error: ${e.toString()}');
               }
             },
         onCancel: () {

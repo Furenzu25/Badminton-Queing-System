@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../models/player.dart';
 import '../services/player_service.dart';
 import '../services/theme_service.dart';
+import '../utils/snackbar_helper.dart';
 import 'add_player_screen.dart';
 import 'edit_player_screen.dart';
 
@@ -57,16 +58,7 @@ class _PlayersListScreenState extends State<PlayersListScreen> {
 
                 Navigator.of(dialogContext).pop();
 
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('${player.nickname} deleted'),
-                    backgroundColor: Theme.of(context).colorScheme.error,
-                    behavior: SnackBarBehavior.floating,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                );
+                SnackBarHelper.showError(context, '${player.nickname} deleted');
               },
               style: FilledButton.styleFrom(
                 backgroundColor: Theme.of(context).colorScheme.error,

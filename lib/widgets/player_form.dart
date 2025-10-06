@@ -107,6 +107,11 @@ class _PlayerFormState extends State<PlayerForm> {
     }
   }
 
+  // Helper widget for section headers
+  Widget _buildSectionHeader(BuildContext context, String title) {
+    return Text(title, style: Theme.of(context).textTheme.labelSmall);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -115,10 +120,7 @@ class _PlayerFormState extends State<PlayerForm> {
         padding: const EdgeInsets.all(16),
         children: [
           // Form section label
-          Text(
-            'BASIC INFORMATION',
-            style: Theme.of(context).textTheme.labelSmall,
-          ),
+          _buildSectionHeader(context, 'BASIC INFORMATION'),
           const SizedBox(height: 12),
 
           // Nickname field
@@ -148,10 +150,7 @@ class _PlayerFormState extends State<PlayerForm> {
           const SizedBox(height: 20),
 
           // Contact section
-          Text(
-            'CONTACT DETAILS',
-            style: Theme.of(context).textTheme.labelSmall,
-          ),
+          _buildSectionHeader(context, 'CONTACT DETAILS'),
           const SizedBox(height: 12),
 
           // Contact Number field
@@ -213,7 +212,7 @@ class _PlayerFormState extends State<PlayerForm> {
           const SizedBox(height: 20),
 
           // Skill level section
-          Text('SKILL LEVEL', style: Theme.of(context).textTheme.labelSmall),
+          _buildSectionHeader(context, 'SKILL LEVEL'),
           const SizedBox(height: 12),
 
           // Badminton Level Slider
