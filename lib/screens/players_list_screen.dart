@@ -86,7 +86,7 @@ class _PlayersListScreenState extends State<PlayersListScreen> {
             ),
           ),
           content: Text(
-            'Are you sure you want to delete ALL ${playerService.playerCount} players? This action cannot be undone.',
+            'Are you sure you want to delete ALL ${playerService.players.length} players? This action cannot be undone.',
             style: Theme.of(context).textTheme.bodyMedium,
           ),
           actions: [

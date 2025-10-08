@@ -12,9 +12,6 @@ class PlayerService extends ChangeNotifier {
   /// Get all players (read-only)
   List<Player> get players => List.unmodifiable(_players);
 
-  /// Get player count
-  int get playerCount => _players.length;
-
   /// Create a new player
   /// Returns the created player
   Player createPlayer({
@@ -75,7 +72,11 @@ class PlayerService extends ChangeNotifier {
       throw ArgumentError('Minimum level cannot be greater than maximum level');
     }
 
-    final updatedPlayer = _players[index].copyWith(
+    final existing = _players[index];
+
+    // Simple instantiation - create new player with updated fields
+    final updatedPlayer = Player(
+      id: existing.id, // Keep same ID
       nickname: nickname.trim(),
       fullName: fullName.trim(),
       contactNumber: contactNumber.trim(),
@@ -86,6 +87,8 @@ class PlayerService extends ChangeNotifier {
       minStrength: minStrength,
       maxLevel: maxLevel,
       maxStrength: maxStrength,
+      createdAt: existing.createdAt, // Keep original creation date
+      updatedAt: DateTime.now(), // Update modification date
     );
 
     _players[index] = updatedPlayer;
@@ -102,15 +105,6 @@ class PlayerService extends ChangeNotifier {
     _players.removeAt(index);
     notifyListeners();
     return true;
-  }
-
-  /// Get a player by ID
-  Player? getPlayerById(String playerId) {
-    try {
-      return _players.firstWhere((p) => p.id == playerId);
-    } catch (e) {
-      return null;
-    }
   }
 
   /// Search players by nickname or full name
@@ -143,14 +137,6 @@ class PlayerService extends ChangeNotifier {
           player.email.toLowerCase() == email.toLowerCase().trim() &&
           player.id != excludePlayerId,
     );
-  }
-
-  /// Get players by skill level range
-  List<Player> getPlayersByLevel(BadmintonLevel level) {
-    return _players.where((player) {
-      return (player.minLevel.index <= level.index &&
-          player.maxLevel.index >= level.index);
-    }).toList();
   }
 
   /// Validate that the level range is valid
