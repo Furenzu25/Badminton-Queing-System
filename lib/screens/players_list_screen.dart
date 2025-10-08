@@ -4,6 +4,7 @@ import '../models/player.dart';
 import '../services/player_service.dart';
 import '../services/theme_service.dart';
 import '../utils/snackbar_helper.dart';
+import '../utils/data_seeder.dart';
 import 'add_player_screen.dart';
 import 'edit_player_screen.dart';
 
@@ -71,12 +72,112 @@ class _PlayersListScreenState extends State<PlayersListScreen> {
     );
   }
 
+  void _confirmClearAll(BuildContext context, PlayerService playerService) {
+    showDialog(
+      context: context,
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          title: const Text(
+            'Clear All Data',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+              letterSpacing: -0.3,
+            ),
+          ),
+          content: Text(
+            'Are you sure you want to delete ALL ${playerService.playerCount} players? This action cannot be undone.',
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(dialogContext).pop(),
+              child: const Text('Cancel'),
+            ),
+            FilledButton(
+              onPressed: () {
+                DataSeeder.clearData(playerService);
+                Navigator.of(dialogContext).pop();
+                SnackBarHelper.showError(context, 'All players deleted');
+              },
+              style: FilledButton.styleFrom(
+                backgroundColor: Theme.of(context).colorScheme.error,
+              ),
+              child: const Text('Clear All'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Players'),
         actions: [
+          // Developer menu for seeding data
+          PopupMenuButton<String>(
+            icon: const Icon(Icons.more_vert, size: 20),
+            tooltip: 'More options',
+            onSelected: (value) {
+              final playerService = Provider.of<PlayerService>(
+                context,
+                listen: false,
+              );
+
+              switch (value) {
+                case 'seed':
+                  DataSeeder.seedPlayers(playerService);
+                  SnackBarHelper.showSuccess(
+                    context,
+                    'Seeded 12 sample players',
+                  );
+                  break;
+                case 'seed_quick':
+                  DataSeeder.seedQuickTest(playerService);
+                  SnackBarHelper.showSuccess(context, 'Seeded 2 test players');
+                  break;
+                case 'clear':
+                  _confirmClearAll(context, playerService);
+                  break;
+              }
+            },
+            itemBuilder: (context) => [
+              const PopupMenuItem(
+                value: 'seed',
+                child: Row(
+                  children: [
+                    Icon(Icons.group_add, size: 18),
+                    SizedBox(width: 12),
+                    Text('Seed Sample Data (12)'),
+                  ],
+                ),
+              ),
+              const PopupMenuItem(
+                value: 'seed_quick',
+                child: Row(
+                  children: [
+                    Icon(Icons.person_add, size: 18),
+                    SizedBox(width: 12),
+                    Text('Quick Test (2)'),
+                  ],
+                ),
+              ),
+              const PopupMenuDivider(),
+              const PopupMenuItem(
+                value: 'clear',
+                child: Row(
+                  children: [
+                    Icon(Icons.delete_sweep, size: 18, color: Colors.red),
+                    SizedBox(width: 12),
+                    Text('Clear All Data', style: TextStyle(color: Colors.red)),
+                  ],
+                ),
+              ),
+            ],
+          ),
           // Theme toggle button
           IconButton(
             icon: Icon(

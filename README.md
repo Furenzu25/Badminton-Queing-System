@@ -215,6 +215,12 @@ dependencies:
   cupertino_icons: ^1.0.8
 ```
 
+### Development Tools
+- **Data Seeder**: Quickly populate the app with test data during development
+  - 12 realistic sample players with diverse skill levels
+  - 2 quick test players for rapid testing
+  - Clear all data option
+
 ### Architecture Pattern
 **Clean Architecture with Single Responsibility Principle**
 
@@ -295,6 +301,18 @@ System fonts used:
 1. Tap the sun/moon icon in the app bar (top right)
 2. Theme switches instantly
 3. Choice persists during session
+
+### Using Test Data (Development)
+
+For development and testing, you can quickly populate the app with sample data:
+
+1. **Tap the menu icon** (⋮) in the app bar
+2. **Choose an option**:
+   - **Seed Sample Data (12)**: Adds 12 realistic player profiles with varied skill levels
+   - **Quick Test (2)**: Adds 2 basic test players for quick testing
+   - **Clear All Data**: Removes all players (with confirmation)
+
+**Note**: This feature is for development/testing only. Data is stored in memory and will be lost when the app restarts.
 
 ## 🧪 Testing
 
