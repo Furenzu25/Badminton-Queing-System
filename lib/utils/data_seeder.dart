@@ -1,5 +1,7 @@
 import '../models/badminton_level.dart';
+import '../models/court_schedule.dart';
 import '../services/player_service.dart';
+import '../services/game_service.dart';
 
 /// Data seeder for development and testing purposes
 /// This class provides sample data to populate the app during development
@@ -226,5 +228,166 @@ class DataSeeder {
   static void clearData(PlayerService playerService) {
     playerService.clearAllPlayers();
     print('🗑️  Cleared all player data');
+  }
+
+  /// Seed sample games into the GameService
+  static void seedGames(GameService gameService) {
+    gameService.clearAllGames();
+
+    final now = DateTime.now();
+
+    // Game 1: Today's evening session
+    final today = DateTime(now.year, now.month, now.day);
+    gameService.createGame(
+      title: 'Friday Evening Doubles',
+      courtName: 'Elite Sports Center',
+      schedules: [
+        CourtSchedule(
+          courtNumber: 'Court 1',
+          startTime: today.add(const Duration(hours: 18)),
+          endTime: today.add(const Duration(hours: 21)),
+        ),
+      ],
+      courtRate: 400.0,
+      shuttleCockPrice: 150.0,
+      divideCourtEqually: true,
+    );
+
+    // Game 2: Tomorrow with multiple courts
+    final tomorrow = today.add(const Duration(days: 1));
+    gameService.createGame(
+      title: 'Saturday Tournament',
+      courtName: 'Central Badminton Club',
+      schedules: [
+        CourtSchedule(
+          courtNumber: 'Court 1',
+          startTime: tomorrow.add(const Duration(hours: 9)),
+          endTime: tomorrow.add(const Duration(hours: 12)),
+        ),
+        CourtSchedule(
+          courtNumber: 'Court 2',
+          startTime: tomorrow.add(const Duration(hours: 10)),
+          endTime: tomorrow.add(const Duration(hours: 12)),
+        ),
+      ],
+      courtRate: 500.0,
+      shuttleCockPrice: 200.0,
+      divideCourtEqually: true,
+    );
+
+    // Game 3: Next week
+    final nextWeek = today.add(const Duration(days: 7));
+    gameService.createGame(
+      title: 'Monday Practice Session',
+      courtName: 'Community Sports Hall',
+      schedules: [
+        CourtSchedule(
+          courtNumber: 'Court 3',
+          startTime: nextWeek.add(const Duration(hours: 19)),
+          endTime: nextWeek.add(const Duration(hours: 22)),
+        ),
+      ],
+      courtRate: 350.0,
+      shuttleCockPrice: 120.0,
+      divideCourtEqually: false,
+    );
+
+    // Game 4: Weekend training
+    final nextSaturday = today.add(
+      Duration(days: today.weekday == 6 ? 7 : 6 - today.weekday + 7),
+    );
+    gameService.createGame(
+      title: 'Advanced Training Camp',
+      courtName: 'Pro Sports Complex',
+      schedules: [
+        CourtSchedule(
+          courtNumber: 'Court 1',
+          startTime: nextSaturday.add(const Duration(hours: 8)),
+          endTime: nextSaturday.add(const Duration(hours: 12)),
+        ),
+        CourtSchedule(
+          courtNumber: 'Court 2',
+          startTime: nextSaturday.add(const Duration(hours: 8)),
+          endTime: nextSaturday.add(const Duration(hours: 12)),
+        ),
+        CourtSchedule(
+          courtNumber: 'Court 3',
+          startTime: nextSaturday.add(const Duration(hours: 13)),
+          endTime: nextSaturday.add(const Duration(hours: 17)),
+        ),
+      ],
+      courtRate: 600.0,
+      shuttleCockPrice: 250.0,
+      divideCourtEqually: true,
+    );
+
+    // Game 5: Simple session with no title
+    final nextFriday = today.add(
+      Duration(days: today.weekday == 5 ? 7 : 5 - today.weekday + 7),
+    );
+    gameService.createGame(
+      title: '',
+      courtName: 'Local Gym',
+      schedules: [
+        CourtSchedule(
+          courtNumber: 'Court A',
+          startTime: nextFriday.add(const Duration(hours: 17)),
+          endTime: nextFriday.add(const Duration(hours: 19)),
+        ),
+      ],
+      courtRate: 300.0,
+      shuttleCockPrice: 100.0,
+      divideCourtEqually: true,
+    );
+
+    print('✅ Seeded 5 sample games!');
+  }
+
+  /// Seed a quick set of test games (fewer games for quick testing)
+  static void seedQuickTestGames(GameService gameService) {
+    gameService.clearAllGames();
+
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+
+    // Quick test game 1
+    gameService.createGame(
+      title: 'Test Game 1',
+      courtName: 'Test Court',
+      schedules: [
+        CourtSchedule(
+          courtNumber: 'Court 1',
+          startTime: today.add(const Duration(hours: 18)),
+          endTime: today.add(const Duration(hours: 20)),
+        ),
+      ],
+      courtRate: 400.0,
+      shuttleCockPrice: 150.0,
+      divideCourtEqually: true,
+    );
+
+    // Quick test game 2
+    gameService.createGame(
+      title: 'Test Game 2',
+      courtName: 'Test Court',
+      schedules: [
+        CourtSchedule(
+          courtNumber: 'Court 2',
+          startTime: today.add(const Duration(days: 1, hours: 19)),
+          endTime: today.add(const Duration(days: 1, hours: 21)),
+        ),
+      ],
+      courtRate: 350.0,
+      shuttleCockPrice: 120.0,
+      divideCourtEqually: true,
+    );
+
+    print('✅ Seeded 2 test games!');
+  }
+
+  /// Clear all game data
+  static void clearGames(GameService gameService) {
+    gameService.clearAllGames();
+    print('🗑️  Cleared all game data');
   }
 }

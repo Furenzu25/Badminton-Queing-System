@@ -96,4 +96,48 @@ class Validators {
 
     return null;
   }
+
+  /// Validates court name
+  static String? validateCourtName(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return 'Court name is required';
+    }
+
+    if (value.trim().length < 2) {
+      return 'Court name must be at least 2 characters';
+    }
+
+    return null;
+  }
+
+  /// Validates positive number (for prices and rates)
+  static String? validatePositiveNumber(String? value, String fieldName) {
+    if (value == null || value.trim().isEmpty) {
+      return '$fieldName is required';
+    }
+
+    final number = double.tryParse(value.trim());
+    if (number == null) {
+      return '$fieldName must be a valid number';
+    }
+
+    if (number <= 0) {
+      return '$fieldName must be greater than 0';
+    }
+
+    return null;
+  }
+
+  /// Validates court number (e.g., "Court 1", "1", etc.)
+  static String? validateCourtNumber(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return 'Court number is required';
+    }
+
+    if (value.trim().length < 1) {
+      return 'Court number is required';
+    }
+
+    return null;
+  }
 }
