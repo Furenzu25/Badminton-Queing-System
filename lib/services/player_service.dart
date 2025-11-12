@@ -14,6 +14,7 @@ class PlayerService extends ChangeNotifier {
 
   /// Create a new player
   /// Returns the created player
+  /// Note: Assumes input format is already validated by Validators class
   Player createPlayer({
     required String nickname,
     required String fullName,
@@ -26,7 +27,8 @@ class PlayerService extends ChangeNotifier {
     required BadmintonLevel maxLevel,
     required SkillStrength maxStrength,
   }) {
-    // Validate that min level is not greater than max level
+    // Business logic validation: Check level range
+    // This is domain-specific logic that can't be checked at form level
     if (!_isValidLevelRange(minLevel, minStrength, maxLevel, maxStrength)) {
       throw ArgumentError('Minimum level cannot be greater than maximum level');
     }
@@ -51,6 +53,7 @@ class PlayerService extends ChangeNotifier {
 
   /// Update an existing player
   /// Returns the updated player or null if not found
+  /// Note: Assumes input format is already validated by Validators class
   Player? updatePlayer(
     String playerId, {
     required String nickname,
@@ -67,7 +70,8 @@ class PlayerService extends ChangeNotifier {
     final index = _players.indexWhere((p) => p.id == playerId);
     if (index == -1) return null;
 
-    // Validate that min level is not greater than max level
+    // Business logic validation: Check level range
+    // This is domain-specific logic that can't be checked at form level
     if (!_isValidLevelRange(minLevel, minStrength, maxLevel, maxStrength)) {
       throw ArgumentError('Minimum level cannot be greater than maximum level');
     }

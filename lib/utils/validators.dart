@@ -140,4 +140,44 @@ class Validators {
 
     return null;
   }
+
+  /// Validates that schedules list is not empty
+  static String? validateSchedulesNotEmpty(int scheduleCount) {
+    if (scheduleCount == 0) {
+      return 'Please add at least one schedule';
+    }
+    return null;
+  }
+
+  /// Validates a single schedule entry
+  /// Returns error message if invalid, null if valid
+  static String? validateScheduleEntry({
+    required int scheduleNumber,
+    required String? courtNumber,
+    required DateTime? date,
+    required dynamic startTime,
+    required dynamic endTime,
+  }) {
+    // Validate court number
+    if (courtNumber == null || courtNumber.trim().isEmpty) {
+      return 'Schedule $scheduleNumber: Court number is required';
+    }
+
+    // Validate date
+    if (date == null) {
+      return 'Schedule $scheduleNumber: Date is required';
+    }
+
+    // Validate start time
+    if (startTime == null) {
+      return 'Schedule $scheduleNumber: Start time is required';
+    }
+
+    // Validate end time
+    if (endTime == null) {
+      return 'Schedule $scheduleNumber: End time is required';
+    }
+
+    return null;
+  }
 }

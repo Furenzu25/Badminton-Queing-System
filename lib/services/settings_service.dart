@@ -11,23 +11,13 @@ class SettingsService extends ChangeNotifier {
   UserSettings get settings => _settings;
 
   /// Update settings
+  /// Note: Assumes input is already validated by Validators class
   void updateSettings({
     required String defaultCourtName,
     required double defaultCourtRate,
     required double defaultShuttleCockPrice,
     required bool divideCourtEqually,
   }) {
-    // Validate inputs
-    if (defaultCourtName.trim().isEmpty) {
-      throw ArgumentError('Court name cannot be empty');
-    }
-    if (defaultCourtRate <= 0) {
-      throw ArgumentError('Court rate must be greater than 0');
-    }
-    if (defaultShuttleCockPrice <= 0) {
-      throw ArgumentError('Shuttle cock price must be greater than 0');
-    }
-
     _settings = UserSettings(
       defaultCourtName: defaultCourtName.trim(),
       defaultCourtRate: defaultCourtRate,

@@ -106,40 +106,28 @@ class _AddGameScreenState extends State<AddGameScreen> {
       return;
     }
 
-    if (_schedules.isEmpty) {
-      SnackBarHelper.showError(context, 'Please add at least one schedule');
+    // Validate schedules count using Validators class
+    final scheduleCountError = Validators.validateSchedulesNotEmpty(
+      _schedules.length,
+    );
+    if (scheduleCountError != null) {
+      SnackBarHelper.showError(context, scheduleCountError);
       return;
     }
 
-    // Validate all schedules
+    // Validate each schedule entry using Validators class
     for (int i = 0; i < _schedules.length; i++) {
       final schedule = _schedules[i];
-      if (schedule.courtNumber.trim().isEmpty) {
-        SnackBarHelper.showError(
-          context,
-          'Schedule ${i + 1}: Court number is required',
-        );
-        return;
-      }
-      if (schedule.date == null) {
-        SnackBarHelper.showError(
-          context,
-          'Schedule ${i + 1}: Date is required',
-        );
-        return;
-      }
-      if (schedule.startTime == null) {
-        SnackBarHelper.showError(
-          context,
-          'Schedule ${i + 1}: Start time is required',
-        );
-        return;
-      }
-      if (schedule.endTime == null) {
-        SnackBarHelper.showError(
-          context,
-          'Schedule ${i + 1}: End time is required',
-        );
+      final scheduleError = Validators.validateScheduleEntry(
+        scheduleNumber: i + 1,
+        courtNumber: schedule.courtNumber,
+        date: schedule.date,
+        startTime: schedule.startTime,
+        endTime: schedule.endTime,
+      );
+
+      if (scheduleError != null) {
+        SnackBarHelper.showError(context, scheduleError);
         return;
       }
     }

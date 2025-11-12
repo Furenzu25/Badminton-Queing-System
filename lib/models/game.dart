@@ -92,38 +92,4 @@ class Game {
     }
     return '${schedules.length} courts scheduled';
   }
-
-  /// Convert to Map for storage
-  Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'title': title,
-      'courtName': courtName,
-      'schedules': schedules.map((s) => s.toMap()).toList(),
-      'courtRate': courtRate,
-      'shuttleCockPrice': shuttleCockPrice,
-      'divideCourtEqually': divideCourtEqually,
-      'playerIds': playerIds,
-      'createdAt': createdAt.toIso8601String(),
-      'updatedAt': updatedAt.toIso8601String(),
-    };
-  }
-
-  /// Create from Map
-  factory Game.fromMap(Map<String, dynamic> map) {
-    return Game(
-      id: map['id'] as String,
-      title: map['title'] as String,
-      courtName: map['courtName'] as String,
-      schedules: (map['schedules'] as List)
-          .map((s) => CourtSchedule.fromMap(s as Map<String, dynamic>))
-          .toList(),
-      courtRate: (map['courtRate'] as num).toDouble(),
-      shuttleCockPrice: (map['shuttleCockPrice'] as num).toDouble(),
-      divideCourtEqually: map['divideCourtEqually'] as bool,
-      playerIds: List<String>.from(map['playerIds'] as List),
-      createdAt: DateTime.parse(map['createdAt'] as String),
-      updatedAt: DateTime.parse(map['updatedAt'] as String),
-    );
-  }
 }

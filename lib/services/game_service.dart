@@ -14,6 +14,7 @@ class GameService extends ChangeNotifier {
 
   /// Create a new game
   /// Returns the created game
+  /// Note: Assumes input is already validated by Validators class
   Game createGame({
     required String title,
     required String courtName,
@@ -23,21 +24,8 @@ class GameService extends ChangeNotifier {
     required bool divideCourtEqually,
     List<String>? playerIds,
   }) {
-    // Validate inputs
-    if (courtName.trim().isEmpty) {
-      throw ArgumentError('Court name cannot be empty');
-    }
-    if (schedules.isEmpty) {
-      throw ArgumentError('At least one schedule is required');
-    }
-    if (courtRate <= 0) {
-      throw ArgumentError('Court rate must be greater than 0');
-    }
-    if (shuttleCockPrice <= 0) {
-      throw ArgumentError('Shuttle cock price must be greater than 0');
-    }
-
-    // Validate schedules
+    // Business logic validation: Check time ranges
+    // This is domain logic that can't be checked at form level
     for (final schedule in schedules) {
       if (schedule.startTime.isAfter(schedule.endTime) ||
           schedule.startTime.isAtSameMomentAs(schedule.endTime)) {
@@ -62,6 +50,7 @@ class GameService extends ChangeNotifier {
 
   /// Update an existing game
   /// Returns the updated game or null if not found
+  /// Note: Assumes input is already validated by Validators class
   Game? updateGame(
     String gameId, {
     required String title,
@@ -75,21 +64,8 @@ class GameService extends ChangeNotifier {
     final index = _games.indexWhere((g) => g.id == gameId);
     if (index == -1) return null;
 
-    // Validate inputs
-    if (courtName.trim().isEmpty) {
-      throw ArgumentError('Court name cannot be empty');
-    }
-    if (schedules.isEmpty) {
-      throw ArgumentError('At least one schedule is required');
-    }
-    if (courtRate <= 0) {
-      throw ArgumentError('Court rate must be greater than 0');
-    }
-    if (shuttleCockPrice <= 0) {
-      throw ArgumentError('Shuttle cock price must be greater than 0');
-    }
-
-    // Validate schedules
+    // Business logic validation: Check time ranges
+    // This is domain logic that can't be checked at form level
     for (final schedule in schedules) {
       if (schedule.startTime.isAfter(schedule.endTime) ||
           schedule.startTime.isAtSameMomentAs(schedule.endTime)) {
@@ -210,4 +186,3 @@ class GameService extends ChangeNotifier {
     notifyListeners();
   }
 }
-

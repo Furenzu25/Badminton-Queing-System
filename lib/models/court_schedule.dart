@@ -25,7 +25,20 @@ class CourtSchedule {
 
   /// Get formatted date (e.g., "Nov 3, 2025")
   String get dateFormatted {
-    final months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    final months = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ];
     return '${months[startTime.month - 1]} ${startTime.day}, ${startTime.year}';
   }
 
@@ -37,23 +50,4 @@ class CourtSchedule {
     final minuteStr = minute.toString().padLeft(2, '0');
     return '$displayHour:$minuteStr $period';
   }
-
-  /// Convert to Map for storage
-  Map<String, dynamic> toMap() {
-    return {
-      'courtNumber': courtNumber,
-      'startTime': startTime.toIso8601String(),
-      'endTime': endTime.toIso8601String(),
-    };
-  }
-
-  /// Create from Map
-  factory CourtSchedule.fromMap(Map<String, dynamic> map) {
-    return CourtSchedule(
-      courtNumber: map['courtNumber'] as String,
-      startTime: DateTime.parse(map['startTime'] as String),
-      endTime: DateTime.parse(map['endTime'] as String),
-    );
-  }
 }
-

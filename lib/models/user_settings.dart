@@ -21,25 +21,4 @@ class UserSettings {
       divideCourtEqually: true,
     );
   }
-
-  /// Convert to Map for storage
-  Map<String, dynamic> toMap() {
-    return {
-      'defaultCourtName': defaultCourtName,
-      'defaultCourtRate': defaultCourtRate,
-      'defaultShuttleCockPrice': defaultShuttleCockPrice,
-      'divideCourtEqually': divideCourtEqually,
-    };
-  }
-
-  /// Create from Map
-  factory UserSettings.fromMap(Map<String, dynamic> map) {
-    return UserSettings(
-      defaultCourtName: map['defaultCourtName'] as String,
-      defaultCourtRate: (map['defaultCourtRate'] as num).toDouble(),
-      defaultShuttleCockPrice: (map['defaultShuttleCockPrice'] as num).toDouble(),
-      divideCourtEqually: map['divideCourtEqually'] as bool,
-    );
-  }
 }
-
